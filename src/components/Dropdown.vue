@@ -63,6 +63,12 @@ export default {
       } else {
         this.dropdownPosition = 'dropdown-above';
       }
+
+      if (buttonRect.left > 200) {
+        this.dropdownPosition += ' dropdown-left';
+      } else {
+        this.dropdownPosition += ' dropdown-right';
+      }
     },
   },
 };
@@ -72,6 +78,7 @@ export default {
 .dropdown-container {
   position: relative;
   display: inline-block;
+  align-self: flex-start;
 }
 
 .btn {
@@ -147,7 +154,18 @@ export default {
 
 .dropdown-below {
   top: 108%;
-  right: 0;
+}
+
+.dropdown-above {
+  top: -200px;
+}
+
+.dropdown-right {
+  left: 0
+}
+
+.dropdown-left {
+  right: 0
 }
 
 /* Add additional styles for other positions if needed */

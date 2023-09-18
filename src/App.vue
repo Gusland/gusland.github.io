@@ -15,8 +15,8 @@
       <ul class="result">
         <li :key="item.id" v-for="item in selectedItems">{{ item.title }}</li>
       </ul>
+      <Dropdown/>
     </div>
-    <Dropdown/>
   </div>
 </template>
 
@@ -77,7 +77,6 @@ export default {
     handleToggle(id, isChecked) {
       if (isChecked) {
         const selectedItem = this.items.find(item => item.id === id);
-        console.info(selectedItem);
         if (selectedItem) {
           this.selectedItems.push(selectedItem);
         }
@@ -114,7 +113,12 @@ export default {
   justify-content: center;
 }
 
+html {
+  height: 100vh
+}
+
 body {
+  height: 100%;
   background-color: var(--primary-500);
 }
 
