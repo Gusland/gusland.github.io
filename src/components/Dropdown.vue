@@ -1,27 +1,23 @@
 <template>
   <div class="dropdown-container" v-click-outside="closeDropdown">
     <button class="btn" @click="toggleDropdown">
-      <svg width="2" height="8" viewBox="0 0 2 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path
-          d="M2 1C2 1.55228 1.55228 2 1 2C0.447715 2 0 1.55228 0 1C0 0.447715 0.447715 0 1 0C1.55228 0 2 0.447715 2 1Z"
-          fill="#4AB4FF"/>
-        <path
-          d="M2 4C2 4.55228 1.55228 5 1 5C0.447715 5 0 4.55228 0 4C0 3.44772 0.447715 3 1 3C1.55228 3 2 3.44772 2 4Z"
-          fill="#4AB4FF"/>
-        <path
-          d="M2 7C2 7.55228 1.55228 8 1 8C0.447715 8 0 7.55228 0 7C0 6.44772 0.447715 6 1 6C1.55228 6 2 6.44772 2 7Z"
-          fill="#4AB4FF"/>
-      </svg>
+      <DropdownIcon/>
     </button>
     <transition name="dropdown-slide">
       <div v-if="isDropdownOpen" class="dropdown" :class="dropdownPosition">
         <ul>
           <li class="dropdown-item" @click="selectItem('Option 1')">Первый</li>
-          <li class="dropdown-item dropdown-item-disabled" @click="selectItem('Option 2')">Второй</li>
+          <li class="dropdown-item" @click="selectItem('Option 2')">Второй</li>
           <li class="dropdown-item" @click="selectItem('Option 3')">Третий</li>
-          <li class="dropdown-item" @click="selectItem('Option 4')">Четвертый</li>
-          <li class="dropdown-item" @click="selectItem('Option 5')">Пятый</li>
-          <li class="dropdown-item" @click="selectItem('Option 6')"> Шестой</li>
+          <li class="dropdown-item dropdown-item-disabled" @click="selectItem('Option 4')">Четвертый</li>
+          <li class="dropdown-item dropdown-item-disabled" @click="selectItem('Option 5')">
+            <DummyImage class="dropdown-item-icon"/>
+            Пятый
+          </li>
+          <li class="dropdown-item" @click="selectItem('Option 6')">
+            <DummyImage class="dropdown-item-icon"/>
+            Шестой
+          </li>
         </ul>
       </div>
     </transition>
@@ -30,8 +26,14 @@
 
 <script>
 import ClickOutsideDirective from '../directives/ClickOutsideDirective';
+import DummyImage from '../assets/icons/dummy-image.svg';
+import DropdownIcon from '../assets/icons/dropdown-icon.svg';
 
 export default {
+  components: {
+    DummyImage,
+    DropdownIcon,
+  },
   directives: {
     'click-outside': ClickOutsideDirective,
   },
@@ -105,6 +107,8 @@ export default {
 }
 
 .dropdown-item {
+  display: flex;
+  align-items: center;
   padding: 6px 12px;
   cursor: pointer;
   color: var(--white);
@@ -112,6 +116,10 @@ export default {
   line-height: 20px;
   border-left: 2px solid transparent;
   background-color: var(--primary-500);
+}
+
+.dropdown-item-icon {
+  margin-right: 6px;
 }
 
 .dropdown-item:hover {
@@ -125,6 +133,7 @@ export default {
 
 .dropdown-item-disabled {
   color: var(--gradients-gray);
+  pointer-events: none;
 }
 
 
