@@ -21,7 +21,7 @@
           <li class="dropdown-item" @click="selectItem('Option 3')">Третий</li>
           <li class="dropdown-item" @click="selectItem('Option 4')">Четвертый</li>
           <li class="dropdown-item" @click="selectItem('Option 5')">Пятый</li>
-          <li class="dropdown-item" @click="selectItem('Option 6')">Шестой</li>
+          <li class="dropdown-item" @click="selectItem('Option 6')"> Шестой</li>
         </ul>
       </div>
     </transition>
@@ -89,6 +89,7 @@ export default {
 
 .dropdown {
   position: absolute;
+  top: 1px;
   z-index: 1;
   width: 200px;
   background: var(--primary-700);
@@ -136,8 +137,8 @@ export default {
 }
 
 .dropdown-below {
-  top: 100%;
-  left: 0;
+  top: 108%;
+  right: 0;
 }
 
 /* Add additional styles for other positions if needed */
