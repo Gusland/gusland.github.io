@@ -31,23 +31,40 @@ export default {
     return {
       items: [
         {
-          id: 1, title: 'apple', visible: true, disabled: true,
+          id: 1, title: 'apple', disabled: true, isToggle: true,
         },
         {
           id: 2,
           title: 'melon',
-          visible: false,
           isToggle: true,
         },
         {
           id: 3,
           title: 'pineapple',
-          visible: true,
+          isToggle: true,
         },
         {
           id: 4,
-          title: 'Cherry',
-          visible: true,
+          title: 'cherry',
+          isToggle: true,
+        },
+        {
+          id: 5, title: 'mango', disabled: true, isToggle: false,
+        },
+        {
+          id: 6,
+          title: 'blueberry',
+          isToggle: false,
+        },
+        {
+          id: 7,
+          title: 'strawberry',
+          isToggle: false,
+        },
+        {
+          id: 8,
+          title: 'banana',
+          isToggle: false,
         },
       ],
       selectedItems: [],

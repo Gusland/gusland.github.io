@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
     <template v-if="isToggle">
-      <div class="toggle" @click="toggleHandler">
+      <div :class="{'toggle': true, 'toggle-disabled': disabled}" @click="toggleHandler">
         <div :class="{ 'toggle-switch': true, 'toggle-on': toggled }"></div>
         <div v-bind:class="{'toggle-text': true, 'toggle-text-white': toggled}"> {{ title }}</div>
 
@@ -153,6 +153,12 @@ input:checked {
   position: relative;
   cursor: pointer;
   margin-bottom: 10px;
+}
+
+.toggle-disabled {
+  pointer-events: none;
+  background: var(--primary-500);
+  border: 1px solid var(--primary-300);
 }
 
 .toggle:hover {
