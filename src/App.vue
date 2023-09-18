@@ -16,15 +16,18 @@
         <li :key="item.id" v-for="item in selectedItems">{{ item.title }}</li>
       </ul>
     </div>
+    <Dropdown/>
   </div>
 </template>
 
 <script>
 import Checkbox from './components/Checkbox';
+import Dropdown from './components/Dropdown';
 
 export default {
   name: 'App',
   components: {
+    Dropdown,
     Checkbox,
   },
   data() {
@@ -89,6 +92,7 @@ export default {
 <style>
 :root {
   --white: #fff;
+  --gradients-gray: #868F98;
   --primary-200: #92A4C8;
   --primary-300: #3E517A;
   --primary-400: #303F5F;
