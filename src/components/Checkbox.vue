@@ -1,58 +1,48 @@
 <template>
   <div class="wrapper">
-    <div class="form-group" v-for="item in Items" v-bind:key="item.id">
-      <label v-bind:class="{'checkbox-wrapper': true, 'checkbox-wrapper-white': isChecked(item.title)}"
-             :for="item.id">{{ item.title }}
-        <input type="checkbox" v-model="user.fruitCollection" :id="item.id" :value="item.title">
-        <span class="checkmark">
+    <label v-show="!isToggle"
+           @click="toggleCheckbox"
+           v-bind:class="{'checkbox-wrapper': true, 'checkbox-wrapper-white': isChecked}"
+           :for="id">{{ title }}
+      <input :disabled="disabled" type="checkbox" :id="id" v-model="isChecked" @change="toggleCheckbox"
+             :value="title">
+      <span class="checkmark">
           <svg width="11" height="9" viewBox="0 0 11 9" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
               d="M4.00002 8.4L0.300019 4.7C0.117455 4.51371 0.0157851 4.2629 0.0171025 4.00207C0.0184198 3.74125 0.122618 3.49148 0.307054 3.30704C0.49149 3.1226 0.741261 3.0184 1.00209 3.01709C1.26292 3.01577 1.51373 3.11744 1.70002 3.3L4.00002 5.6L9.30002 0.300004C9.48631 0.11744 9.73712 0.0157699 9.99795 0.0170872C10.2588 0.0184046 10.5085 0.122603 10.693 0.307039C10.8774 0.491475 10.9816 0.741246 10.9829 1.00207C10.9843 1.2629 10.8826 1.51371 10.7 1.7L4.00002 8.4Z"
               fill="#4AB4FF"/>
           </svg>
         </span>
+    </label>
 
-      </label>
-    </div>
-    <!-- print result -->
-    <div class="form-group">
-      {{ user.fruitCollection }}
-    </div>
+    <!--    <label class="switch">-->
+    <!--      <input type="checkbox">-->
+    <!--      <span class="slider"></span>-->
+    <!--    </label>-->
   </div>
 </template>
 
 <script>
 export default {
+  props: {
+    id: Number,
+    title: String,
+    disabled: Boolean,
+    isToggle: {
+      type: Boolean,
+      default: false,
+    },
+  },
   data() {
     return {
-      Items: [
-        {
-          id: 1, title: 'apple', visible: true, disabled: true,
-        },
-        {
-          id: 2,
-          title: 'melon',
-          visible: false,
-        },
-        {
-          id: 3,
-          title: 'pineapple',
-          visible: true,
-        },
-        {
-          id: 4,
-          title: 'Cherry',
-          visible: true,
-        },
-      ],
-      user: {
-        fruitCollection: [],
-      },
+      isChecked: false,
     };
   },
   methods: {
-    isChecked(value) {
-      return this.user.fruitCollection.includes(value);
+    toggleCheckbox() {
+      if (!this.disabled) {
+        this.$emit('toggle', this.id, this.isChecked);
+      }
     },
   },
 };
@@ -141,11 +131,6 @@ input:checked {
   justify-content: center;
 }
 
-.form-group {
-  display: flex;
-  align-items: center;
-  margin-top: 20px;
-}
 
 @keyframes draw-checkbox {
   0% {

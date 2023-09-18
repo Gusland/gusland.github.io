@@ -1,6 +1,21 @@
 <template>
   <div id="app">
-    <Checkbox/>
+    <div class="wrapper">
+      <div v-for="item in items" :key="item.id">
+        <Checkbox
+          :id="item.id"
+          :title="item.title"
+          :visible="item.visible"
+          :disabled="item.disabled"
+          :isToggle="false"
+          @toggle="handleToggle"
+        />
+      </div>
+      <!-- print result -->
+      <ul class="result">
+        <li :key="item.id" v-for="item in selectedItems">{{ item.title }}</li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -11,6 +26,43 @@ export default {
   name: 'App',
   components: {
     Checkbox,
+  },
+  data() {
+    return {
+      items: [
+        {
+          id: 1, title: 'apple', visible: true, disabled: true,
+        },
+        {
+          id: 2,
+          title: 'melon',
+          visible: false,
+        },
+        {
+          id: 3,
+          title: 'pineapple',
+          visible: true,
+        },
+        {
+          id: 4,
+          title: 'Cherry',
+          visible: true,
+        },
+      ],
+      selectedItems: [],
+    };
+  },
+  methods: {
+    handleToggle(id, isChecked) {
+      if (isChecked) {
+        const selectedItem = this.items.find(item => item.id === id);
+        if (selectedItem) {
+          this.selectedItems.push(selectedItem);
+        }
+      } else {
+        this.selectedItems = this.selectedItems.filter(item => item.id !== id);
+      }
+    },
   },
 };
 </script>
@@ -41,5 +93,23 @@ export default {
 
 body {
   background-color: var(--primary-500);
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.result {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  list-style: none;
+  color: var(--white);
+  font-size: 16px;
+}
+
+.result li:not(:first-child) {
+  margin-top: 10px;
 }
 </style>
