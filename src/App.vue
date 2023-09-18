@@ -7,7 +7,7 @@
           :title="item.title"
           :visible="item.visible"
           :disabled="item.disabled"
-          :isToggle="false"
+          :isToggle="item.isToggle"
           @toggle="handleToggle"
         />
       </div>
@@ -37,6 +37,7 @@ export default {
           id: 2,
           title: 'melon',
           visible: false,
+          isToggle: true,
         },
         {
           id: 3,
@@ -56,6 +57,7 @@ export default {
     handleToggle(id, isChecked) {
       if (isChecked) {
         const selectedItem = this.items.find(item => item.id === id);
+        console.info(selectedItem);
         if (selectedItem) {
           this.selectedItems.push(selectedItem);
         }

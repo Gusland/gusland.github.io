@@ -1,28 +1,34 @@
 <template>
   <div class="wrapper">
-    <label v-show="!isToggle"
-           @click="toggleCheckbox"
-           v-bind:class="{'checkbox-wrapper': true, 'checkbox-wrapper-white': isChecked}"
-           :for="id">{{ title }}
-      <input :disabled="disabled" type="checkbox" :id="id" v-model="isChecked" @change="toggleCheckbox"
-             :value="title">
-      <span class="checkmark">
+    <template v-if="isToggle">
+      <div class="toggle" @click="toggleHandler">
+        <div :class="{ 'toggle-switch': true, 'toggle-on': toggled }"></div>
+        <div v-bind:class="{'toggle-text': true, 'toggle-text-white': toggled}"> {{ title }}</div>
+
+      </div>
+    </template>
+    <template v-else>
+      <label v-show="!isToggle"
+             @click="toggleHandler"
+             v-bind:class="{'checkbox-wrapper': true, 'checkbox-wrapper-white': isChecked}"
+             :for="id">{{ title }}
+        <input :disabled="disabled" type="checkbox" :id="id" v-model="isChecked" @change="toggleHandler"
+               :value="title">
+        <span class="checkmark">
           <svg width="11" height="9" viewBox="0 0 11 9" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
               d="M4.00002 8.4L0.300019 4.7C0.117455 4.51371 0.0157851 4.2629 0.0171025 4.00207C0.0184198 3.74125 0.122618 3.49148 0.307054 3.30704C0.49149 3.1226 0.741261 3.0184 1.00209 3.01709C1.26292 3.01577 1.51373 3.11744 1.70002 3.3L4.00002 5.6L9.30002 0.300004C9.48631 0.11744 9.73712 0.0157699 9.99795 0.0170872C10.2588 0.0184046 10.5085 0.122603 10.693 0.307039C10.8774 0.491475 10.9816 0.741246 10.9829 1.00207C10.9843 1.2629 10.8826 1.51371 10.7 1.7L4.00002 8.4Z"
               fill="#4AB4FF"/>
           </svg>
         </span>
-    </label>
+      </label>
+    </template>
 
-    <!--    <label class="switch">-->
-    <!--      <input type="checkbox">-->
-    <!--      <span class="slider"></span>-->
-    <!--    </label>-->
   </div>
 </template>
 
 <script>
+
 export default {
   props: {
     id: Number,
@@ -36,11 +42,15 @@ export default {
   data() {
     return {
       isChecked: false,
+      toggled: false,
     };
   },
   methods: {
-    toggleCheckbox() {
-      if (!this.disabled) {
+    toggleHandler() {
+      if (this.isToggle) {
+        this.toggled = !this.toggled;
+        this.$emit('toggle', this.id, this.toggled);
+      } else if (!this.disabled) {
         this.$emit('toggle', this.id, this.isChecked);
       }
     },
@@ -132,12 +142,51 @@ input:checked {
 }
 
 
-@keyframes draw-checkbox {
-  0% {
-    stroke-dashoffset: 33;
-  }
-  100% {
-    stroke-dashoffset: 0;
-  }
+.toggle {
+  display: flex;
+  align-items: center;
+  width: 44px;
+  height: 20px;
+  background-color: var(--primary-700);
+  border: 1px solid var(--primary-400);
+  border-radius: 4px;
+  position: relative;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.toggle:hover {
+  background-color: var(--primary-900);
+}
+
+.toggle:active {
+  border: 1px solid var(--primary-300);
+}
+
+.toggle-switch {
+  width: 16px;
+  height: 16px;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  border-radius: 2px;
+  background-color: var(--primary-200);
+  transition: transform 0.3s, color 0.3s;
+}
+
+.toggle-text {
+  position: relative;
+  left: 50px;
+  font-size: 22px;
+  color: var(--primary-200);
+}
+
+.toggle-text-white {
+  color: var(--white);
+}
+
+.toggle-on {
+  background-color: var(--secondary-500);
+  transform: translateX(24px);
 }
 </style>
